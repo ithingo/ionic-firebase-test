@@ -10,17 +10,16 @@ import { FirestoreService } from '../../services/data/firestore.service';
   styleUrls: ['./create-book.page.scss'],
 })
 export class CreateBookPage implements OnInit {
-  private editMode: boolean = false;
   private bookId: string;
-  public bookForm: FormGroup;
 
-  // @FIXME: temporarily doesn't work
+  public bookForm: FormGroup;
+  public editMode: boolean = false;
+
   private setBookToBeUpdated(): void {
     this.firestoreService
       .getBook(this.bookId)
       .valueChanges()
-      .toPromise()
-      .then(data => {
+      .subscribe(data => {
         const formConfig = {
           title: data.title,
           author: data.author,
@@ -49,17 +48,17 @@ export class CreateBookPage implements OnInit {
       author: new FormControl('', Validators.required),
       publishedYear: new FormControl('', Validators.required),
     });
-    if (this.editMode) {
-      this.setBookToBeUpdated();
-    }
+    if (this.editMode) { this.setBookToBeUpdated(); }
   }
 
   public async createBook(): Promise<any> {
     const loading = await this.loadingCtrl.create();
     const bookData = this.bookForm.value;
 
-    this.firestoreService
-      .createBook(bookData)
+    const actionPromise = this.editMode
+      ? this.firestoreService.updateBook(this.bookId, bookData)
+      : this.firestoreService.createBook(bookData);
+    actionPromise
       .then(() => loading.dismiss())
       .then(() => this.router.navigate(['']))
       .catch((err) => console.error(err));

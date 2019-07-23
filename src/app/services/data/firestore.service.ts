@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+} from 'angularfire2/firestore';
 import { Book } from 'src/app/models/book';
 
 @Injectable({
@@ -18,9 +22,11 @@ export class FirestoreService {
       .set({ id, ...bookData });
   }
 
-  // public updateBook(bookId: string, newData: any): Promise<any> {
-    
-  // }
+  public updateBook(bookId: string, newData: any): Promise<any> {
+    return this.firestore
+      .doc(`bookList/${bookId}`)
+      .set(newData, { merge: true })
+  }
 
   public deleteBook(bookId: string): Promise<any> {
     return this.firestore
