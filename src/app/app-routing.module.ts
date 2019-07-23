@@ -4,8 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
-  { path: 'create-book', loadChildren: './pages/create-book/create-book.module#CreateBookPageModule' },
-  { path: 'update-book/:id', loadChildren: './pages/create-book/create-book.module#CreateBookPageModule' },
+  { path: 'create-book', loadChildren: './pages/book-form/book-form.module#BookFormPageModule' },
+  { path: 'update-book/:id', loadChildren: './pages/book-form/book-form.module#BookFormPageModule' },
   { path: 'book-details/:id', loadChildren: './pages/book-details/book-details.module#BookDetailsPageModule' },
 ];
 

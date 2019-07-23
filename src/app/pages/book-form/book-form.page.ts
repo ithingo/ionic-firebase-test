@@ -5,11 +5,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from '../../services/data/firestore.service';
 
 @Component({
-  selector: 'app-create-book',
-  templateUrl: './create-book.page.html',
-  styleUrls: ['./create-book.page.scss'],
+  selector: 'app-book-form',
+  templateUrl: './book-form.page.html',
+  styleUrls: ['./book-form.page.scss'],
 })
-export class CreateBookPage implements OnInit {
+export class BookFormPage implements OnInit {
   private bookId: string;
 
   public bookForm: FormGroup;
