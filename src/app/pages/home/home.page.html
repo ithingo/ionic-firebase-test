@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Books list
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/create-book">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card *ngFor="let book of bookList | async" routerLink="/book-details/{{book.id}}">
+    <ion-card-header>
+      title: {{ book.title }}
+    </ion-card-header>
+    <ion-card-content>
+      author: {{ book.author }}
+    </ion-card-content>
+    <ion-card-content>
+      published: {{ book.publishedYear }}
+    </ion-card-content>
+  </ion-card>
+</ion-content>

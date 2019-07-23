@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ (book | async)?.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="!isClosing">
+    <h3>Description</h3>
+    <p>
+      The book "{{ (book | async)?.title }}"
+      was written by {{ (book | async)?.author }}
+      in {{ (book | async)?.publishedYear }}.
+    </p>
+  </div>
+</ion-content>
+
+<ion-footer no-shadow>
+	<ion-toolbar position="bottom" padding>
+    <ion-buttons slot="secondary">
+      <ion-button expand="block" (click)="deleteBook()">
+        Delete
+      </ion-button>
+      <ion-button routerLink="/update-book/{{(book | async)?.id}}">
+        Update
+      </ion-button>
+    </ion-buttons>
+	</ion-toolbar>
+</ion-footer>

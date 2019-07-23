@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{editmode ? 'Update book' : 'Create book'}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="bookForm" (submit)="createBook()">
+    <ion-item>
+      <ion-label stacked>Book title</ion-label>
+      <ion-input formControlName="title" type="text" placeholder="Title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Book author</ion-label>
+      <ion-input formControlName="author" type="text" placeholder="Author"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Year of publishing</ion-label>
+      <ion-input formControlName="publishedYear" type="text" placeholder="Year"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!bookForm.valid">
+      Add
+    </ion-button>
+  </form>
+</ion-content>
