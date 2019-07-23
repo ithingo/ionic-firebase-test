@@ -5,22 +5,21 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FirestoreService } from '../../services/data/firestore.service';
 
 @Component({
-  selector: 'app-create-book',
-  templateUrl: './create-book.page.html',
-  styleUrls: ['./create-book.page.scss'],
+  selector: 'app-book-form',
+  templateUrl: './book-form.page.html',
+  styleUrls: ['./book-form.page.scss'],
 })
-export class CreateBookPage implements OnInit {
-  private editMode: boolean = false;
+export class BookFormPage implements OnInit {
   private bookId: string;
-  public bookForm: FormGroup;
 
-  // @FIXME: temporarily doesn't work
+  public bookForm: FormGroup;
+  public editMode: boolean = false;
+
   private setBookToBeUpdated(): void {
     this.firestoreService
       .getBook(this.bookId)
       .valueChanges()
-      .toPromise()
-      .then(data => {
+      .subscribe(data => {
         const formConfig = {
           title: data.title,
           author: data.author,
@@ -49,17 +48,17 @@ export class CreateBookPage implements OnInit {
       author: new FormControl('', Validators.required),
       publishedYear: new FormControl('', Validators.required),
     });
-    if (this.editMode) {
-      this.setBookToBeUpdated();
-    }
+    if (this.editMode) { this.setBookToBeUpdated(); }
   }
 
   public async createBook(): Promise<any> {
     const loading = await this.loadingCtrl.create();
     const bookData = this.bookForm.value;
 
-    this.firestoreService
-      .createBook(bookData)
+    const actionPromise = this.editMode
+      ? this.firestoreService.updateBook(this.bookId, bookData)
+      : this.firestoreService.createBook(bookData);
+    actionPromise
       .then(() => loading.dismiss())
       .then(() => this.router.navigate(['']))
       .catch((err) => console.error(err));
